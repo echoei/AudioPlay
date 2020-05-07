@@ -9,11 +9,12 @@ module.exports = {
 
     output: {
         path: path.join(__dirname, './dist'),
-        filename: '[name].js'
+        filename: '[name].[hash:10].js'
     },
 
     devServer: {
-        contentBase: './dist'
+        contentBase: './dist',
+        historyApiFallback: true,
     },
 
     resolve: {
