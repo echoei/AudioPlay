@@ -1,6 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const SRC_PATH = path.resolve(__dirname, '../src');
+const DIST_PATH = path.resolve(__dirname, '../dist');
 
 module.exports = {
     entry: {
@@ -68,10 +71,18 @@ module.exports = {
                     }
                 ]
             },
+            {
+                test: /\.(png|jpe?g|gif|svg|mp3)(\?.*)?$/,
+                loader: "url-loader"
+            }
         ]
     },
 
     plugins: [
+        new CopyWebpackPlugin([{
+            from: path.join("./src", "assets"),
+            to: path.join(path.join(__dirname, './dist'), "assets")
+        }]),
         new HtmlWebpackPlugin({
             filename: "index.html",
             template: "src/index.html",

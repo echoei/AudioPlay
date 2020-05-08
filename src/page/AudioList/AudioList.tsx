@@ -5,7 +5,7 @@ import './AudioList.scss';
 import { actionsTypes } from "../../store/action";
 import browserHistory from "../../router/history";
 import { collectListRouter } from "../../router/router";
-import AudioListItem from "../Compoents/AudioListItem";
+import AudioListItem from "../Compoents/AudioListItem/AudioListItem";
 interface AudioListProps {
   // audioList: any[];
   audioState: any;
@@ -28,42 +28,42 @@ class AudioList extends React.Component<AudioListProps> {
             {
               name: "暗恋说", 
               singer: "西瓜jun",
-              audioUrl: ""
+              audioUrl: "hidden_love_say.mp3"
             },
             {
               name: "不再见面", 
               singer: "西瓜jun",
-              audioUrl: ""
+              audioUrl: "let_is_not.mp3"
             },
             {
               name: "如她", 
               singer: "西瓜jun",
-              audioUrl: ""
+              audioUrl: "as_she.mp3"
             },
             {
-              name: "视觉疲劳", 
+              name: "世觉疲劳", 
               singer: "西瓜jun",
-              audioUrl: ""
+              audioUrl: "world_tired.mp3"
             },
             {
               name: "随心歌", 
               singer: "西瓜jun",
-              audioUrl: ""
+              audioUrl: "satisfied.mp3"
             },
             {
               name: "他的剑", 
               singer: "西瓜jun",
-              audioUrl: ""
+              audioUrl: "he_sword.mp3"
             },
             {
               name: "特别曲目", 
               singer: "西瓜jun",
-              audioUrl: ""
+              audioUrl: "spacial_song.mp3"
             },
             {
               name: "状元叹", 
               singer: "西瓜jun",
-              audioUrl: ""
+              audioUrl: "first_sigh.mp3"
             },
           ]
         });
@@ -76,6 +76,14 @@ class AudioList extends React.Component<AudioListProps> {
     })
   }
 
+  private stopList: Function[] = [];
+  private stopFun(fun: Function): void {
+    this.stopList.push(fun);
+  }
+
+  private stop(): void {
+    this.stopList.forEach(item => item());
+  }
 
   public render(): React.ReactNode {
     return <div className="audio-list-con">
@@ -88,7 +96,14 @@ class AudioList extends React.Component<AudioListProps> {
       
       {
         this.props.audioState.list.map((item: any, index: number)=>{
-          return <AudioListItem data={item} key={'audio' + index} favoriteList={this.props.favoriteState.list} dispatch={this.props.dispatch}></AudioListItem>
+          return <AudioListItem 
+            data={item} 
+            key={'audio' + index} 
+            favoriteList={this.props.favoriteState.list} 
+            dispatch={this.props.dispatch} 
+            stopFun={this.stopFun.bind(this)}
+            stop = {this.stop.bind(this)}
+            ></AudioListItem>
         })
       }
     </div>
