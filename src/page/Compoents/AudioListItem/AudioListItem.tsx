@@ -20,6 +20,7 @@ interface AudioListItemState {
 export default class AudioListItem extends React.Component<AudioListItemData, AudioListItemState> {
   private audioPlaying: boolean = false;
   private audio: HTMLAudioElement = {} as HTMLAudioElement;
+  private curAudioUrl: string = "";
   public constructor(props: AudioListItemData) {
     super(props);
     this.state = {
@@ -43,13 +44,18 @@ export default class AudioListItem extends React.Component<AudioListItemData, Au
   }
 
   private stop() {
-    this.audio.pause();
-    this.audio.currentTime = 1;
     // console.log(this.audio.);
-    this.audioPlaying = false;
-    this.setState({
-      audioPlaying: this.audioPlaying
-    })
+    //如果不是当前点击的音频就绝对关闭
+    if(!this.curAudioUrl)
+    {
+      this.audio.pause();
+      this.audio.currentTime = 1;
+      this.audioPlaying = false;
+      this.setState({
+        audioPlaying: false
+      })
+    }
+    this.curAudioUrl = "";
   }
 
   public render(): React.ReactNode {
@@ -65,7 +71,8 @@ export default class AudioListItem extends React.Component<AudioListItemData, Au
         <source src={audioUrl} type=""/>
       </audio>
       <div className="controller">
-        <div className={"paly-btn" + (this.audioPlaying ? " playing" : "")} onClick={(e)=>{
+        <div className={"paly-btn" + (this.state.audioPlaying ? " playing" : "")} onClick={(e)=>{
+          this.curAudioUrl = this.audio.currentSrc;
           this.props.stop();
           if(this.audioPlaying) {
             this.audio.pause()
