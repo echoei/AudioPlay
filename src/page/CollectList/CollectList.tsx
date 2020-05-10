@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { StoreState } from "../../store/storeType";
 import AudioListItem from "../Compoents/AudioListItem/AudioListItem";
+import TopBar from "../Compoents/TopBar/TopBar";
 
 interface CollectListProps {
   favoriteState: any;
@@ -25,7 +26,7 @@ class CollectList extends React.Component<CollectListProps> {
 
   public render(): React.ReactNode {
     return <div className="collect-list-con">
-      收藏列表
+      <TopBar></TopBar>
       {
         this.props.favoriteState.list.map((item: any, index: number)=>{
           return <AudioListItem 

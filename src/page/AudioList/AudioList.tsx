@@ -6,6 +6,7 @@ import { actionsTypes } from "../../store/action";
 import browserHistory from "../../router/history";
 import { collectListRouter } from "../../router/router";
 import AudioListItem from "../Compoents/AudioListItem/AudioListItem";
+import TopBar from "../Compoents/TopBar/TopBar";
 interface AudioListProps {
   // audioList: any[];
   audioState: any;
@@ -87,13 +88,13 @@ class AudioList extends React.Component<AudioListProps> {
 
   public render(): React.ReactNode {
     return <div className="audio-list-con">
-      <div className="top-bar">
+      <TopBar isHome={true} hasBtn={{name: "收藏列表", path: collectListRouter.path}}></TopBar>
+      {/* <div className="top-bar">
         <div className="title">音频列表</div>
         <div className="btn" onClick={()=>{
           browserHistory.push(collectListRouter.path);
         }}>收藏列表</div>
-      </div>
-      
+      </div> */}
       {
         this.props.audioState.list.map((item: any, index: number)=>{
           return <AudioListItem 
