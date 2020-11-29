@@ -65,7 +65,7 @@ export default class AudioListItem extends React.Component<AudioListItemData, Au
     });
     let audioUrl: string = "../../assets/audio/" + this.props.data.audioUrl;
     return <div className="item-div">
-    <div>{this.props.data.name}</div>
+    <div className="item-name">{this.props.data.name}</div>
     <div className="audio" >
       <audio>
         <source src={audioUrl} type=""/>
